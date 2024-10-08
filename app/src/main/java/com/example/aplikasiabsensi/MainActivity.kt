@@ -8,6 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
@@ -30,6 +31,13 @@ class MainActivity : AppCompatActivity() {
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
+        }
+        val crdMenuAbsensi = findViewById<CardView>(R.id.crdMenuAbsensi)
+
+        crdMenuAbsensi.setOnClickListener {
+            val intent = Intent(this, MenuAbsensi::class.java)
+            intent.putExtra("username", username)
+            startActivity(intent)
         }
 
 
