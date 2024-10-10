@@ -27,7 +27,7 @@ class MenuAbsensi : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        val username = intent.getStringExtra("username")
+//        val username = intent.getStringExtra("username")
 
         recyclerView = findViewById(R.id.lstAbsensi)
         setupRecyclerView()
@@ -37,7 +37,7 @@ class MenuAbsensi : AppCompatActivity() {
         fbAdd.setOnClickListener{
 
             val intent = Intent(this, AbsensiAdd::class.java)
-            intent.putExtra("username", username)
+//            intent.putExtra("username", username)
             startActivityForResult(intent,100)
 
         }

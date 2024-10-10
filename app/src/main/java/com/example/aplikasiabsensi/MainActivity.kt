@@ -1,6 +1,7 @@
 package com.example.aplikasiabsensi
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.provider.MediaStore
@@ -13,13 +14,21 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
 class MainActivity : AppCompatActivity() {
+    private val PREF_NAME = "LOGIN"
+    private val USER_IS_LOGIN = "username"
+    private lateinit var sharedPreferences: SharedPreferences
+    lateinit var  username:String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 //        enableEdgeToEdge()
         setContentView(R.layout.activity_main)
-        val username = intent.getStringExtra("username")
+//        val username = intent.getStringExtra("username")
+        sharedPreferences = getSharedPreferences(PREF_NAME, MODE_PRIVATE)
+        username = sharedPreferences.getString(USER_IS_LOGIN,"").toString()
+
         val textView = findViewById<TextView>(R.id.textView3)
-        textView.text = "Selamat Datang  \n, $username"
+        textView.text = "Selamat Datang, \n$username"
         val imgProfile = findViewById<ImageView>(R.id.imgProfile)
         imgProfile.setOnClickListener{
             val implicitIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
@@ -36,10 +45,14 @@ class MainActivity : AppCompatActivity() {
 
         crdMenuAbsensi.setOnClickListener {
             val intent = Intent(this, MenuAbsensi::class.java)
-            intent.putExtra("username", username)
+//            intent.putExtra("username", username)
             startActivity(intent)
         }
-
+        val btnNotes = findViewById<androidx.cardview.widget.CardView>(R.id.crdNotes)
+        btnNotes.setOnClickListener{
+            val intent = Intent(this, NotesApp::class.java)
+            startActivity(intent)
+        }
 
     }
 
