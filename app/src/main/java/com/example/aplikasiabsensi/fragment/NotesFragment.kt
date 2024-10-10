@@ -1,6 +1,7 @@
 package com.example.aplikasiabsensi.fragment
 
 import android.content.SharedPreferences
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -31,14 +32,30 @@ class NotesFragment: Fragment() {
         btnSaveNotes = view.findViewById(R.id.btnSaveNotes)
         txtJudulNotes = view.findViewById(R.id.txtJudulNotes)
 
+        arguments?.getParcelable<Notes>("notes")?.let {
+            txtNotes.setText(it.isi)
+            txtJudulNotes.setText(it.judul)
+        }
+
         btnSaveNotes.setOnClickListener{
             saveNotes(txtJudulNotes.text.toString(), txtNotes.text.toString())
 //            txtNotes.setText("")
 //            txtJudulNotes.setText
-            val listFragment = parentFragmentManager.findFragmentById(R.id.frameListNotes) as ListFragment
+            if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT)
+            {
+                requireActivity().supportFragmentManager.beginTransaction()
+                    .replace(R.id.frameListNotes, ListFragment()).commit()
+            }
+            else {
+//                val listFragment = parentFragmentManager.findFragmentById(R.id.frameListNotes) as ListFragment
+//                if(listFragment!=null){
+//                    listFragment.updateDataSharedPreference(Notes(txtJudulNotes.text.toString(),txtNotes.text.toString()))
+//
+//                    txtNotes.setText("")
+//                    txtJudulNotes.setText("")
+//                }
+                requireActivity().supportFragmentManager.beginTransaction().replace(R.id.frameListNotes, ListFragment()).commit()
 
-            if(listFragment!=null){
-                listFragment.updateDataSharedPreference(Notes(txtJudulNotes.text.toString(),txtNotes.text.toString()))
 
                 txtNotes.setText("")
                 txtJudulNotes.setText("")
@@ -57,5 +74,15 @@ class NotesFragment: Fragment() {
     fun loadNotes(judul: String): String {
         sharedPreferences = requireActivity().getSharedPreferences(PREF_NAME, 0)
         return sharedPreferences.getString(judul, "").toString()
+    }
+
+    companion object {
+        fun newInstance(notes: Notes):NotesFragment{
+            return  NotesFragment().apply {
+                arguments = Bundle().apply {
+                    putParcelable("notes", notes)
+                }
+            }
+        }
     }
 }

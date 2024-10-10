@@ -31,9 +31,6 @@ class NotesApp : FragmentActivity() {
                 supportFragmentManager.beginTransaction().remove(supportFragmentManager.findFragmentById(R.id.frameNotes)!!).commit()
             }
 
-
-
-
 //            val notes = Notes("Catatan Si Boy", "Ini catatannya")
 //            notes.apply {
 //                title = "Catatan Si Boy"
